@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/cabecalho.css">
     <link rel="stylesheet" href="css/produtos.css">
+    <link rel="stylesheet" href="css/rodape.css">
 </head>
 
 <body>
@@ -22,29 +23,29 @@
         <div class="header-conteudo">
             <div class="header-esquerda">
 
-                    <button class="menu-hamburguer">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button>
-
-                    <a href="/">
-                        <img src="./assets/images/logo.svg" alt="Dev em Dobro">
-                    </a>
-                </div>
-                <nav class="menu-principal">
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#sobre">Sobre</a></li>
-                        <li><a href="#produtos">Produtos</a></li>
-                        <li><a href="#faq">Perguntas Frequentes</a></li>
-                        <li><a href="#contato">Fale Conosco</a></li>
-                    </ul>
-                </nav>
-                <button class="botao-carrinho">
-                    <span id="quantidade">0</span>
-                    <img src="./assets/images/icone_carrinho.svg" alt="carrinho de compras">
+                <button class="menu-hamburguer">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
+
+                <a href="/">
+                    <img src="./assets/images/logo.svg" alt="Dev em Dobro">
+                </a>
+            </div>
+            <nav class="menu-principal">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#produtos">Produtos</a></li>
+                    <li><a href="#faq">Perguntas Frequentes</a></li>
+                    <li><a href="#contato">Fale Conosco</a></li>
+                </ul>
+            </nav>
+            <button class="botao-carrinho">
+                <span id="quantidade">0</span>
+                <img src="./assets/images/icone_carrinho.svg" alt="carrinho de compras">
+            </button>
     </header>
     <main>
         <section class="produtos">
@@ -64,48 +65,46 @@
                 </li>
             </ul>
         </section>
-        <footer>
-            <nav>
-                <h3>Institucional</h3>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#produtos">Produtos</a></li>
-                    <li><a href="#perguntas-frequentes">Perguntas Frequentes</a></li>
-                    <li><a href="#fale-conosco">Fale Conosco</a></li>
-                </ul>
-            </nav>
-            <nav>
-                <h3>Ajuda</h3>
-                <ul>
-                    <li><a href="#trocas">Trocas e Devoluções</a></li>
-                    <li><a href="#termos">Termos e Condições</a></li>
-                    <li><a href="#politica">Política de Privacidade</a></li>
-                    <li><a href="#padrao">Padrão de Qualidade</a></li>
-                </ul>
-            </nav>
-            <nav>
-                <h3>Endereço</h3>
-                <ul>
-                    <li><a href="#">Rua Vale do Silicio</a></li>
-                    <li>São Francisco, Califórnia</li>
-                    <li>Estados Unidos da América</li>
-                    <li><a href="#">(34) 1234-5678</a></li>
-                    <li><a href="#">vendas@ecommercedd.com</a></li>
-                </ul>
-            </nav>
-            <div>
+        <footer class="rodape">
+            <div class="container">
+                <nav>
+                    <h3>Institucional</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="#produtos">Produtos</a></li>
+                        <li><a href="#perguntas-frequentes">Perguntas Frequentes</a></li>
+                        <li><a href="#fale-conosco">Fale Conosco</a></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <h3>Ajuda</h3>
+                    <ul>
+                        <li><a href="#trocas">Trocas e Devoluções</a></li>
+                        <li><a href="#termos">Termos e Condições</a></li>
+                        <li><a href="#politica">Política de Privacidade</a></li>
+                        <li><a href="#padrao">Padrão de Qualidade</a></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <h3>Endereço</h3>
+                    <ul>
+                        <li><a href="#">Rua Vale do Silicio</a></li>
+                        <li>São Francisco, Califórnia</li>
+                        <li>Estados Unidos da América</li>
+                        <li><a href="#">(34) 1234-5678</a></li>
+                        <li><a href="#">vendas@ecommercedd.com</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="copyright">
                 <p>@2024 - Todos os direitos reservados</p>
             </div>
         </footer>
 
-        <!-- [1] -->
-        <div id="modal-1" class="modal" aria-hidden="true">
-
-            <!-- [2] -->
+        <!-- <div id="modal-1" class="modal" aria-hidden="true">
             <div tabindex="-1" data-micromodal-close>
 
-                <!-- [3] -->
                 <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
 
 
@@ -114,7 +113,6 @@
                             Carrinho de Compras
                         </h2>
 
-                        <!-- [4] -->
                         <button aria-label="Close modal" data-micromodal-close></button>
                     </header>
 
@@ -150,7 +148,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
         <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
