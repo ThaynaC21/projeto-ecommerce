@@ -11,6 +11,10 @@ main section h2 {
     margin-bottom: 2rem;
 }
 
+main .produtos {
+    margin-bottom: 2rem;
+}
+
 main .produtos ul {
     display: flex;
     flex-direction: column;
