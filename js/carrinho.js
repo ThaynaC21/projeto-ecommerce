@@ -25,7 +25,7 @@ Objetivo 3 - atualizar os valores do carrinho
 //     parte 1 - vamos adicionar +1 no icone do carrinho 
 //     passo 1 - pegar os botões de adicionar ao carrinho do html
 
-const botoesAdicionarAoCarrinho = document.querySelectorAll('.adicionar-ao-carrinho');
+const botoesAdicionarAoCarrinho = document.querySelectorAll(".adicionar-ao-carrinho");
 
 // passo 2 - adicionar um evento de escuta nesses botões pra quando clicar disparar uma ação
 botoesAdicionarAoCarrinho.forEach(botao => {
@@ -56,6 +56,7 @@ botoesAdicionarAoCarrinho.forEach(botao => {
             carrinho.push(produto);
         }
         salvarProdutosNoCarrinho(carrinho);
+        atualizarContadorCarrinho();
     });
 });
 function salvarProdutosNoCarrinho(carrinho) {
@@ -66,3 +67,18 @@ function obterProdutosDoCarrinho() {
     const produtos = localStorage.getItem("carrinho");
     return produtos ? JSON.parse(produtos) : [];
 }
+
+//passo 4 - atualizar o contador do carrinho de compras
+function atualizarContadorCarrinho() {
+    const carrinho = obterProdutosDoCarrinho();
+    let total = 0;
+
+    carrinho.forEach(produto => {
+        total += produto.quantidade;
+    });
+
+    console.log(total);
+
+    document.getElementById("quantidade").textContent = total;
+}
+atualizarContadorCarrinho();
