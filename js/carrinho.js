@@ -87,7 +87,6 @@ atualizarContadorCarrinho();
 function renderizarTabelaDoCarrinho() {
     const produtos = obterProdutosDoCarrinho();
     const corpoTabela = document.querySelector("#modal-1-content table tbody");
-    console.log(corpoTabela);
     corpoTabela.innerHTML = ""; //limpar tabela antes de renderizar
        produtos.forEach(produto => {
         const tr = document.createElement("tr");
@@ -101,10 +100,32 @@ function renderizarTabelaDoCarrinho() {
         <td class="td-preco-unitario">R$ ${produto.preco.toFixed(2).replace(".", ",")}</td>
         <td class="td-quantidade"><input type="number" value="${produto.quantidade}" min="1"></td>
         <td class="td-preco-total">R$ ${produto.preco.toFixed(2).replace(".", ",")}</td>
-        <td><button class="btn-remover" data-id="${produto.id}" id="deletar"></button></td>`;
+        <td><button class="btn-remover" data-id="${produto.id}" id="remover"></button></td>`;
         corpoTabela.appendChild(tr);
        });
        
 }
 
 renderizarTabelaDoCarrinho();
+
+// Objetivo 2 - remover produtos do carrinho 
+//       passo 1 - pegar o botão de deletar do html
+const corpoTabela = document.querySelector("#modal-1-content table tbody");
+corpoTabela.addEventListener("click", (evento) => {
+    console.log("entrou aqui");
+    console.log(evento.target.classList.contains("btn-remover"));
+
+    if(evento.target.classList.contains("btn-remover")) {
+    const id = evento.target.dataset.id;
+    removerProdutoDoCarrinho(id);
+    }
+})
+function removerProdutoDoCarrinho(id) {
+    const produtos = obterProdutosDoCarrinho();
+    
+    //filtrar os produtos que não tem o id igual ao que queremos remover
+    const produtosAtualizados = produtos.filter(produto => produto.id !== id);
+    salvarProdutosNoCarrinho(produtosAtualizados);
+    atualizarContadorCarrinho();
+    renderizarTabelaDoCarrinho();
+}
