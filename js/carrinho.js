@@ -23,138 +23,132 @@ Objetivo 3 - atualizar os valores do carrinho
 //     parte 1 - vamos adicionar +1 no icone do carrinho 
 //     passo 1 - pegar os botões de adicionar ao carrinho do html
 
-const botoesAdicionarAoCarrinho = document.querySelectorAll(".adicionar-ao-carrinho");
+// Seleciona todos os botões de adicionar ao carrinho
+const botoesAdicionarAoCarrinho = document.querySelectorAll('.adicionar-ao-carrinho');
 
 // passo 2 - adicionar um evento de escuta nesses botões pra quando clicar disparar uma ação
+// Adiciona evento de clique para cada botão
 botoesAdicionarAoCarrinho.forEach(botao => {
-    botao.addEventListener("click", (evento) => {
-        //passo 3 - pega as informações do produto clicado e adicionar no localStorage
-        const elementoProduto = evento.target.closest(".produto");
-        const produtoId = elementoProduto.getAttribute("data-id");
-        const produtoNome = elementoProduto.querySelector(".nome").textContent;
-        const produtoImagem = elementoProduto.querySelector("img").getAttribute("src");
-        const produtoPreco = parseFloat(elementoProduto.querySelector(".preco").textContent.replace("R$ ", "").replace(".", "").replace(",", "."));
+    botao.addEventListener('click', (evento) => {
+        const elementoProduto = evento.target.closest('.produto');
+        const produtoId = elementoProduto.getAttribute('data-id');
+        const produtoNome = elementoProduto.querySelector('.nome').textContent;
+        const produtoImagem = elementoProduto.querySelector('img').getAttribute('src');
+        const produtoPreco = parseFloat(elementoProduto.querySelector('.preco').textContent.replace('R$ ', '').replace('.', '').replace(',', '.'));
 
-        //buscar a lista de produtos do localStorage
+        // Busca carrinho atual
         const carrinho = obterProdutosDoCarrinho();
-        //testar se o produto já existe no carrinho
-        const existeProduto = carrinho.find(produto => produto.id === produtoId);
-        //se existe produto, incrementar a quantidade
-        if(existeProduto) {
-            existeProduto.quantidade += 1;
+        const produtoExistente = carrinho.find(produto => produto.id === produtoId);
+        if (produtoExistente) {
+            produtoExistente.quantidade += 1;
         } else {
-            //se não existe, adicionar o produto com quantidade 1
-            const produto = {
+            carrinho.push({
                 id: produtoId,
                 nome: produtoNome,
                 imagem: produtoImagem,
                 preco: produtoPreco,
                 quantidade: 1
-            };
-            carrinho.push(produto);
+            });
         }
         salvarProdutosNoCarrinho(carrinho);
         atualizarCarrinhoETabela();
     });
 });
+// Salva o carrinho no localStorage
 function salvarProdutosNoCarrinho(carrinho) {
-    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
 }
 
+// Recupera os produtos do carrinho do localStorage
 function obterProdutosDoCarrinho() {
-    const produtos = localStorage.getItem("carrinho");
+    const produtos = localStorage.getItem('carrinho');
     return produtos ? JSON.parse(produtos) : [];
 }
 
 //passo 4 - atualizar o contador do carrinho de compras
+// Atualiza o contador de itens do carrinho no ícone
 function atualizarContadorCarrinho() {
     const produtos = obterProdutosDoCarrinho();
-    let total = 0;
-
-    produtos.forEach(produto => {
-        total += produto.quantidade;
-    });
-
-    console.log(total);
-
-    document.getElementById("quantidade").textContent = total;
+    const total = produtos.reduce((soma, produto) => soma + produto.quantidade, 0);
+    document.getElementById('quantidade').textContent = total;
 }
 
 //passo 5 - renderizar a tabela do carrinho de compras
+// Renderiza a tabela do carrinho na modal
 function renderizarTabelaDoCarrinho() {
     const produtos = obterProdutosDoCarrinho();
-    const corpoTabela = document.querySelector("#modal-1-content table tbody");
-    corpoTabela.innerHTML = ""; //limpar tabela antes de renderizar
-       produtos.forEach(produto => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td class="td-produto">
-        <img 
-        src="${produto.imagem}" 
-        alt="${produto.nome}"
-        />
-        </td>
-        <td>${produto.nome}</td>
-        <td class="td-preco-unitario">R$ ${produto.preco.toFixed(2).replace(".", ",")}</td>
-        <td class="td-quantidade"><input type="number" class="input-quantidade" data-id="${produto.id}" value="${produto.quantidade}" min="1"></td>
-        <td class="td-preco-total">R$ ${(produto.preco * produto.quantidade).toFixed(2).replace(".", ",")}</td>
-        <td><button class="btn-remover" data-id="${produto.id}" id="remover"></button></td>`;
+    const corpoTabela = document.querySelector('#modal-1-content table tbody');
+    corpoTabela.innerHTML = '';
+    produtos.forEach(produto => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="td-produto">
+                <img src="${produto.imagem}" alt="${produto.nome}" />
+            </td>
+            <td>${produto.nome}</td>
+            <td class="td-preco-unitario">R$ ${produto.preco.toFixed(2).replace('.', ',')}</td>
+            <td class="td-quantidade">
+                <input type="number" class="input-quantidade" data-id="${produto.id}" value="${produto.quantidade}" min="1">
+            </td>
+            <td class="td-preco-total">R$ ${(produto.preco * produto.quantidade).toFixed(2).replace('.', ',')}</td>
+            <td><button class="btn-remover" data-id="${produto.id}"></button></td>
+        `;
         corpoTabela.appendChild(tr);
-       });
-       
+    });
 }
 
 // Objetivo 2 - remover produtos do carrinho 
 //       passo 1 - pegar o botão de deletar do html
-const corpoTabela = document.querySelector("#modal-1-content table tbody");
+// Seleciona o corpo da tabela do carrinho
+const corpoTabela = document.querySelector('#modal-1-content table tbody');
 
 //passo 2 - adicionar evento de escuta no tbody
-corpoTabela.addEventListener("click", (evento) => {
- if(evento.target.classList.contains("btn-remover")) {
-    const id = evento.target.dataset.id;
-    //passo 3 - remover o produto do localStorage
-    removerProdutoDoCarrinho(id);
+// Evento para remover produto do carrinho
+corpoTabela.addEventListener('click', (evento) => {
+    if (evento.target.classList.contains('btn-remover')) {
+        const id = evento.target.dataset.id;
+        removerProdutoDoCarrinho(id);
     }
-})
+});
 
   // passo 1 - adicionar evento de escuta no input do tbody
-corpoTabela.addEventListener("input", (evento) => {
-  // passo 2 - atualizar o valor total do produto
-  if (evento.target.classList.contains('input-quantidade')) {
-    const produtos = obterProdutosDoCarrinho();
-    const produto = produtos.find(produto => produto.id === evento.target.dataset.id);
-    let novaQuantidade = parseInt(evento.target.value);
-    if (produto) {
-        produto.quantidade = novaQuantidade; 
-    }
-    salvarProdutosNoCarrinho(produtos);
-    atualizarCarrinhoETabela();
-  }
-
+// Evento para atualizar quantidade do produto
+corpoTabela.addEventListener('input', (evento) => {
+        if (evento.target.classList.contains('input-quantidade')) {
+                const produtos = obterProdutosDoCarrinho();
+                const produto = produtos.find(produto => produto.id === evento.target.dataset.id);
+                const novaQuantidade = parseInt(evento.target.value);
+                if (produto && novaQuantidade > 0) {
+                        produto.quantidade = novaQuantidade;
+                        salvarProdutosNoCarrinho(produtos);
+                        atualizarCarrinhoETabela();
+                }
+        }
 });
 
 //passo 4 - atualizar o html do carrinho retirando o produto
+// Remove produto do carrinho pelo id
 function removerProdutoDoCarrinho(id) {
     const produtos = obterProdutosDoCarrinho();
-    
-    //filtrar os produtos que não tem o id igual ao que queremos remover
     const produtosAtualizados = produtos.filter(produto => produto.id !== id);
     salvarProdutosNoCarrinho(produtosAtualizados);
     atualizarCarrinhoETabela();
 }
 
  // passo 3 - atualizar o valor total do carrinho
+// Atualiza o valor total do carrinho
 function atualizarValorTotalDoCarrinho() {
     const produtos = obterProdutosDoCarrinho();
-    let total = 0;
+    const total = produtos.reduce((soma, produto) => soma + produto.preco * produto.quantidade, 0);
+    document.querySelector('#total-carrinho').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+}
 
-    produtos.forEach(produto => {
-        total += produto.preco * produto.quantidade;});
-    document.querySelector("#total-carrinho").textContent = `R$ ${total.toFixed(2).replace(".", ",")}`;}
-
+// Atualiza contador, tabela e valor total do carrinho
 function atualizarCarrinhoETabela() {
     atualizarContadorCarrinho();
     renderizarTabelaDoCarrinho();
     atualizarValorTotalDoCarrinho();
 }
 
+// Inicializa carrinho ao carregar página
 atualizarCarrinhoETabela();
